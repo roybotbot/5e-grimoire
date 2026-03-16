@@ -3,7 +3,12 @@ import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
+  base: "/5etools-src/",
   plugins: [react(), tailwindcss()],
+  build: {
+    outDir: "../docs",
+    emptyOutDir: true,
+  },
   test: {
     globals: true,
     environment: "jsdom",
