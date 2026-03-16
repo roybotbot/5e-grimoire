@@ -93,17 +93,19 @@ export function SpellDetail({ spell, onClose, onPrev, onNext }: SpellDetailProps
             <button
               type="button"
               onClick={() => (saved ? remove(spell.id) : add(spell.id))}
-              className="cursor-pointer"
+              className="flex items-center gap-1.5 px-2 py-0.5 rounded-[2px] cursor-pointer transition-colors duration-[120ms]"
               style={{
-                background: "transparent",
-                border: "none",
-                fontSize: "16px",
-                color: saved ? "var(--accent-primary)" : "var(--text-muted)",
-                marginLeft: "2px",
+                background: saved ? "var(--accent-primary)" : "transparent",
+                border: saved ? "1px solid var(--accent-primary)" : "1px solid var(--border-subtle)",
+                color: saved ? "var(--text-primary)" : "var(--text-muted)",
+                fontSize: "12px",
+                marginLeft: "8px",
+                flexShrink: 0,
               }}
               aria-label={saved ? "Unsave spell" : "Save spell"}
             >
-              {saved ? "★" : "☆"}
+              <span style={{ fontSize: "13px" }}>{saved ? "★" : "☆"}</span>
+              <span style={{ fontWeight: 500 }}>{saved ? "Saved" : "Save"}</span>
             </button>
           </div>
 
