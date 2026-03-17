@@ -30,7 +30,7 @@ describe("normalizeMonsterType", () => {
 describe("normalizeMonsterAC", () => {
   it("handles simple number", () => { expect(normalizeMonsterAC([12])).toBe("12"); });
   it("handles object with from", () => { expect(normalizeMonsterAC([{ ac: 15, from: ["natural armor"] }])).toBe("15 (natural armor)"); });
-  it("handles object with special", () => { expect(normalizeMonsterAC([{ special: "11 + spell level" }])).toBe("11 + spell level"); });
+  it("handles object with special", () => { expect(normalizeMonsterAC([{ ac: 0, special: "11 + spell level" } as any])).toBe("11 + spell level"); });
 });
 
 describe("normalizeMonsterHP", () => {

@@ -58,7 +58,7 @@ describe("normalizeRace", () => {
       page: 29,
       size: ["M"],
       speed: 30,
-      entries: [{ type: "entries", name: "Languages", entries: ["You can speak, read, and write Common and one extra language."] }],
+      entries: [{ type: "entries" as const, name: "Languages", entries: ["You can speak, read, and write Common and one extra language."] }],
     };
     const result = normalizeRace(raw);
     expect(result.id).toBe("human_phb");

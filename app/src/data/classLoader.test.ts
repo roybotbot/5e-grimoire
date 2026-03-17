@@ -25,7 +25,7 @@ describe("normalizeClassData", () => {
       name: "Fighter", source: "XPHB", page: 90,
       hd: { number: 1, faces: 10 },
       proficiency: ["str", "con"],
-      primaryAbility: [{ str: true }, { dex: true }],
+      primaryAbility: [{ str: true } as Record<string, boolean>, { dex: true } as Record<string, boolean>],
       startingProficiencies: {
         armor: ["light", "medium", "heavy", "shield"],
         weapons: ["simple", "martial"],
