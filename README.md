@@ -1,17 +1,42 @@
-# 5e.tools
+# 5e Grimoire
 
-Visit the [main site](https://5e.tools/index.html) or go to the unofficial GitHub [mirror](index.html).
+A focused spell reference for 5th Edition Dungeons & Dragons. Dark, fast, searchable.
 
-[Join the 5etools Discord here!](https://discord.gg/5etools)
+## Features
 
-## Help and Support
+- **Search** — find spells by name instantly
+- **Filter** — by level, school, class, casting time, concentration, ritual, components, damage type, source
+- **Spell detail** — clean card layout with school-colored header, stats grid, full description
+- **Save spells** — bookmark spells to a persistent saved list
+- **Keyboard navigation** — `/` to search, arrow keys to browse, Escape to close
+- **Mobile friendly** — responsive layout with touch support
 
-Please see [our wiki](https://wiki.tercept.net/) for FAQs, installation guides, supported integrations, and more.
+## Running locally
 
-## Contributing
+```bash
+cd app
+npm install
+npm run dev
+```
 
-See [CONTRIBUTING.md](CONTRIBUTING.md).
+Spell data files need to be in `app/public/data/spells/`. Copy them from a 5etools source release if not present.
 
-## License
+## Production build
 
-This project is licensed under the terms of the MIT license.
+```bash
+cd app
+npm run build
+```
+
+Output goes to `docs/` for GitHub Pages deployment. Serve from any static file server.
+
+## Tech stack
+
+- React 19 + TypeScript + Vite
+- Tailwind CSS v4
+- Zustand (state management)
+- React Router v7 (hash routing)
+
+## Design
+
+Dark monochrome UI with 90s silkscreen accent colors per spell school. Based on the Pixel-Modernist Workstation UI spec.
