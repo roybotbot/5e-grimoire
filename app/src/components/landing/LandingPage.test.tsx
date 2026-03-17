@@ -63,4 +63,11 @@ describe("LandingPage", () => {
     expect(link).toBeInTheDocument();
     expect(link).toHaveAttribute("href", "/classes");
   });
+
+  it("renders the feats link", () => {
+    renderLanding();
+    const link = screen.getByRole("link", { name: /feats/i });
+    expect(link).toBeInTheDocument();
+    expect(link).toHaveAttribute("href", "/feats");
+  });
 });
