@@ -1,5 +1,6 @@
 import React from "react";
 import { buildSpellId } from "./spellLoader";
+import { buildMonsterId } from "./bestiaryLoader";
 
 // ── Tag display extractor ─────────────────────────────────────────────────────
 
@@ -78,8 +79,25 @@ export function renderTaggedText(text: string): React.ReactNode[] {
         break;
       }
 
+      case "creature": {
+        // content may be "name|source" or just "name"
+        const pipeIdx = content.indexOf("|");
+        const creatureName = pipeIdx === -1 ? content : content.slice(0, pipeIdx);
+        const creatureSource = pipeIdx === -1 ? "" : content.slice(pipeIdx + 1);
+        const rawId = buildMonsterId(creatureName, creatureSource);
+        // Strip trailing underscore when source is empty
+        const monsterId = rawId.replace(/_$/, "");
+        const href = `#/bestiary/${monsterId}`;
+        nodes.push(
+          <a key={key} href={href}>
+            {creatureName}
+          </a>
+        );
+        break;
+      }
+
       default:
-        // All other tags (damage, dice, condition, creature, item, action, skill, etc.)
+        // All other tags (damage, dice, condition, item, action, skill, etc.)
         // → plain display text
         nodes.push(extractTagDisplay(tag, content));
         break;

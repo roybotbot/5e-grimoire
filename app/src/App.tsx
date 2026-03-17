@@ -5,17 +5,20 @@ import { SpellListView } from "./components/spells/SpellListView";
 import { ClassListView } from "./components/classes/ClassListView";
 import { SpeciesListView } from "./components/species/SpeciesListView";
 import { FeatListView } from "./components/feats/FeatListView";
+import { BestiaryListView } from "./components/bestiary/BestiaryListView";
 
 const router = createHashRouter([
   { path: "/", element: <LandingPage /> },
   { path: "/spells", element: <SpellListView /> },
   { path: "/spells/:spellId", element: <SpellListView /> },
-  { path: "/classes", element: <ClassListView /> },
-  { path: "/classes/:classId", element: <ClassListView /> },
   { path: "/species", element: <SpeciesListView /> },
   { path: "/species/:speciesId", element: <SpeciesListView /> },
+  { path: "/classes", element: <ClassListView /> },
+  { path: "/classes/:classId", element: <ClassListView /> },
   { path: "/feats", element: <FeatListView /> },
   { path: "/feats/:featId", element: <FeatListView /> },
+  { path: "/bestiary", element: <BestiaryListView /> },
+  { path: "/bestiary/:monsterId", element: <BestiaryListView /> },
 ]);
 
 export default function App() {
