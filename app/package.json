@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "postbuild": "mkdir -p ../docs/data && rm -rf ../docs/data/spells ../docs/data/bestiary ../docs/data/class && cp -r ../data/spells ../docs/data/spells && cp ../data/races.json ../docs/data/races.json && cp ../data/feats.json ../docs/data/feats.json && cp -r ../data/bestiary ../docs/data/bestiary && cp -r ../data/class ../docs/data/class && touch ../docs/.nojekyll && echo 'spells.roy.wtf' > ../docs/CNAME",
     "lint": "eslint .",
     "preview": "vite preview"
   },

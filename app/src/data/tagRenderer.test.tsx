@@ -114,10 +114,19 @@ describe("renderTaggedText", () => {
     expect(nodes[0]).toBe("frightened");
   });
 
-  it("{@creature ...} renders plain text", () => {
+  it("{@creature name} renders anchor with href to bestiary", () => {
     const nodes = renderTaggedText("{@creature goblin}");
-    expect(nodes).toHaveLength(1);
-    expect(nodes[0]).toBe("goblin");
+    renderNodes(nodes);
+    const link = screen.getByRole("link", { name: "goblin" });
+    expect(link).toBeDefined();
+    expect(link.getAttribute("href")).toBe("#/bestiary/goblin");
+  });
+
+  it("{@creature name|source} renders anchor with source in href", () => {
+    const nodes = renderTaggedText("{@creature Goblin|MM}");
+    renderNodes(nodes);
+    const link = screen.getByRole("link", { name: "Goblin" });
+    expect(link.getAttribute("href")).toBe("#/bestiary/goblin_mm");
   });
 
   it("{@item ...} renders text before pipe", () => {

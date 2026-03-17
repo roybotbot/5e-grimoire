@@ -9,25 +9,12 @@ interface Entry {
 }
 
 const ENTRIES: Entry[] = [
-  {
-    id: "spells",
-    label: "spells",
-    description: "reference",
-    active: true,
-    to: "/spells",
-  },
-  {
-    id: "bestiary",
-    label: "bestiary",
-    description: "coming soon",
-    active: false,
-  },
-  {
-    id: "items",
-    label: "items",
-    description: "coming soon",
-    active: false,
-  },
+  { id: "spells", label: "spells", description: "reference", active: true, to: "/spells" },
+  { id: "species", label: "species", description: "reference", active: true, to: "/species" },
+  { id: "classes", label: "classes", description: "reference", active: true, to: "/classes" },
+  { id: "feats", label: "feats", description: "reference", active: true, to: "/feats" },
+  { id: "bestiary", label: "bestiary", description: "reference", active: true, to: "/bestiary" },
+  { id: "items", label: "items", description: "coming soon", active: false },
 ];
 
 export function LandingPage() {
