@@ -42,4 +42,11 @@ describe("LandingPage", () => {
       screen.getByText(/digital reference for products you already own/i)
     ).toBeInTheDocument();
   });
+
+  it("renders the classes link", () => {
+    renderLanding();
+    const link = screen.getByRole("link", { name: /classes/i });
+    expect(link).toBeInTheDocument();
+    expect(link).toHaveAttribute("href", "/classes");
+  });
 });

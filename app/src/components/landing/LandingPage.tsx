@@ -17,6 +17,13 @@ const ENTRIES: Entry[] = [
     to: "/spells",
   },
   {
+    id: "classes",
+    label: "classes",
+    description: "reference",
+    active: true,
+    to: "/classes",
+  },
+  {
     id: "bestiary",
     label: "bestiary",
     description: "coming soon",
@@ -61,7 +68,7 @@ export function LandingPage() {
             margin: "8px 0 0 0",
           }}
         >
-          spell reference for 5th edition
+          reference for 5th edition
         </p>
 
         {/* Horizontal rule */}
