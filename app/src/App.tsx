@@ -4,6 +4,7 @@ import { LandingPage } from "./components/landing/LandingPage";
 import { SpellListView } from "./components/spells/SpellListView";
 import { ClassListView } from "./components/classes/ClassListView";
 import { SpeciesListView } from "./components/species/SpeciesListView";
+import { FeatListView } from "./components/feats/FeatListView";
 
 const router = createHashRouter([
   { path: "/", element: <LandingPage /> },
@@ -13,6 +14,8 @@ const router = createHashRouter([
   { path: "/classes/:classId", element: <ClassListView /> },
   { path: "/species", element: <SpeciesListView /> },
   { path: "/species/:speciesId", element: <SpeciesListView /> },
+  { path: "/feats", element: <FeatListView /> },
+  { path: "/feats/:featId", element: <FeatListView /> },
 ]);
 
 export default function App() {

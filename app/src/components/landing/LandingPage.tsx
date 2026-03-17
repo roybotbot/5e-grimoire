@@ -9,32 +9,12 @@ interface Entry {
 }
 
 const ENTRIES: Entry[] = [
-  {
-    id: "spells",
-    label: "spells",
-    description: "reference",
-    active: true,
-    to: "/spells",
-  },
-  {
-    id: "classes",
-    label: "classes",
-    description: "reference",
-    active: true,
-    to: "/classes",
-  },
-  {
-    id: "bestiary",
-    label: "bestiary",
-    description: "coming soon",
-    active: false,
-  },
-  {
-    id: "items",
-    label: "items",
-    description: "coming soon",
-    active: false,
-  },
+  { id: "spells", label: "spells", description: "reference", active: true, to: "/spells" },
+  { id: "species", label: "species", description: "reference", active: true, to: "/species" },
+  { id: "classes", label: "classes", description: "reference", active: true, to: "/classes" },
+  { id: "feats", label: "feats", description: "coming soon", active: false },
+  { id: "bestiary", label: "bestiary", description: "reference", active: true, to: "/bestiary" },
+  { id: "items", label: "items", description: "coming soon", active: false },
 ];
 
 export function LandingPage() {
@@ -68,7 +48,7 @@ export function LandingPage() {
             margin: "8px 0 0 0",
           }}
         >
-          reference for 5th edition
+          spell reference for 5th edition
         </p>
 
         {/* Horizontal rule */}

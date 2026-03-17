@@ -24,6 +24,13 @@ describe("LandingPage", () => {
     expect(link).toHaveAttribute("href", "/spells");
   });
 
+  it("renders the species link", () => {
+    renderLanding();
+    const link = screen.getByRole("link", { name: /species/i });
+    expect(link).toBeInTheDocument();
+    expect(link).toHaveAttribute("href", "/species");
+  });
+
   it("renders coming soon text for inactive entries", () => {
     renderLanding();
     const comingSoon = screen.getAllByText("coming soon");
@@ -34,6 +41,13 @@ describe("LandingPage", () => {
     renderLanding();
     expect(screen.getByText("bestiary")).toBeInTheDocument();
     expect(screen.getByText("items")).toBeInTheDocument();
+  });
+
+  it("renders the bestiary link", () => {
+    renderLanding();
+    const link = screen.getByRole("link", { name: /bestiary/i });
+    expect(link).toBeInTheDocument();
+    expect(link).toHaveAttribute("href", "/bestiary");
   });
 
   it("renders the footer", () => {
