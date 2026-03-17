@@ -1,6 +1,6 @@
 # 5e Grimoire
 
-A focused spell reference for 5th Edition Dungeons & Dragons. Dark, fast, searchable.
+A focused reference for 5th Edition Dungeons & Dragons. 
 
 ## Features
 
@@ -36,7 +36,3 @@ Output goes to `docs/` for GitHub Pages deployment. Serve from any static file s
 - Tailwind CSS v4
 - Zustand (state management)
 - React Router v7 (hash routing)
-
-## Design
-
-Dark monochrome UI with 90s silkscreen accent colors per spell school. Based on the Pixel-Modernist Workstation UI spec.
