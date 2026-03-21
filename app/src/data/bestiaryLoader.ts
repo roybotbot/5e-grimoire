@@ -5,18 +5,12 @@ import type {
   RawBestiaryIndex,
 } from "./bestiaryTypes";
 import type { SpellEntry } from "./spellTypes";
+import { buildEntityId } from "./entityId";
+import { SIZE_MAP } from "./constants";
 
 // ── ID ────────────────────────────────────────────────────────────────────────
 
-export function buildMonsterId(name: string, source: string): string {
-  const slug = (s: string) =>
-    s
-      .toLowerCase()
-      .replace(/['']/g, "")
-      .replace(/[^a-z0-9]+/g, "-")
-      .replace(/^-|-$/g, "");
-  return `${slug(name)}_${slug(source)}`;
-}
+export const buildMonsterId = buildEntityId;
 
 // ── Type ──────────────────────────────────────────────────────────────────────
 
@@ -45,15 +39,6 @@ export function normalizeMonsterType(
 }
 
 // ── Size ──────────────────────────────────────────────────────────────────────
-
-const SIZE_MAP: Record<string, string> = {
-  T: "Tiny",
-  S: "Small",
-  M: "Medium",
-  L: "Large",
-  H: "Huge",
-  G: "Gargantuan",
-};
 
 function normalizeSize(sizes: string[]): { size: string[]; sizeDisplay: string } {
   const display = sizes.map((s) => SIZE_MAP[s] ?? s).join(", ");
@@ -230,11 +215,12 @@ export function normalizeMonster(raw: RawMonster): MonsterData {
 
   const { size, sizeDisplay } = normalizeSize(raw.size ?? []);
 
-  const typeRaw = normalizeMonsterType(raw.type);
-  // typeDisplay strips tags for short display
-  const typeDisplay = typeof raw.type === "string"
-    ? capitalize(raw.type)
-    : capitalize((raw.type as { type: string })?.type ?? "Unknown");
+  // type = lowercase base type for filtering (e.g. "humanoid")
+  const typeBase = typeof raw.type === "string"
+    ? raw.type
+    : (raw.type as { type: string })?.type ?? "unknown";
+  // typeDisplay = full display string (e.g. "Humanoid (aarakocra)")
+  const typeDisplay = normalizeMonsterType(raw.type);
 
   const { cr, crNumber } = normalizeMonsterCR(raw.cr);
 
@@ -249,7 +235,7 @@ export function normalizeMonster(raw: RawMonster): MonsterData {
     source: raw.source,
     size,
     sizeDisplay,
-    type: typeRaw,
+    type: typeBase,
     typeDisplay,
     alignment: normalizeAlignment(raw.alignment),
     ac: normalizeMonsterAC(raw.ac),

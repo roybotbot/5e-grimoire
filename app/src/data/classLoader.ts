@@ -6,29 +6,12 @@ import type {
   RawSubclass,
   RawClassFeature,
 } from "./classTypes";
-
-// ── Ability map ───────────────────────────────────────────────────────────────
-
-const ABILITY_MAP: Record<string, string> = {
-  str: "Strength",
-  dex: "Dexterity",
-  con: "Constitution",
-  int: "Intelligence",
-  wis: "Wisdom",
-  cha: "Charisma",
-};
+import { buildEntityId } from "./entityId";
+import { ABILITY_MAP } from "./constants";
 
 // ── ID ────────────────────────────────────────────────────────────────────────
 
-export function buildClassId(name: string, source: string): string {
-  const slug = (s: string) =>
-    s
-      .toLowerCase()
-      .replace(/['']/g, "")
-      .replace(/[^a-z0-9]+/g, "-")
-      .replace(/^-|-$/g, "");
-  return `${slug(name)}_${slug(source)}`;
-}
+export const buildClassId = buildEntityId;
 
 // ── Hit die ───────────────────────────────────────────────────────────────────
 

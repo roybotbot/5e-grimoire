@@ -71,65 +71,6 @@ describe("initial state", () => {
   });
 });
 
-// ── Setters ───────────────────────────────────────────────────────────────────
-
-describe("setMonsters", () => {
-  it("updates monsters array", () => {
-    const m = makeMonster({});
-    useBestiaryStore.getState().setMonsters([m]);
-    expect(useBestiaryStore.getState().monsters).toHaveLength(1);
-    expect(useBestiaryStore.getState().monsters[0].name).toBe("Test Monster");
-  });
-
-  it("replaces existing monsters", () => {
-    const m1 = makeMonster({ name: "Monster 1" });
-    const m2 = makeMonster({ name: "Monster 2" });
-    useBestiaryStore.getState().setMonsters([m1]);
-    useBestiaryStore.getState().setMonsters([m2]);
-    expect(useBestiaryStore.getState().monsters).toHaveLength(1);
-    expect(useBestiaryStore.getState().monsters[0].name).toBe("Monster 2");
-  });
-});
-
-describe("setLoading", () => {
-  it("sets loading to true", () => {
-    useBestiaryStore.getState().setLoading(true);
-    expect(useBestiaryStore.getState().loading).toBe(true);
-  });
-
-  it("sets loading to false", () => {
-    useBestiaryStore.getState().setLoading(true);
-    useBestiaryStore.getState().setLoading(false);
-    expect(useBestiaryStore.getState().loading).toBe(false);
-  });
-});
-
-describe("setError", () => {
-  it("sets an error message", () => {
-    useBestiaryStore.getState().setError("Something went wrong");
-    expect(useBestiaryStore.getState().error).toBe("Something went wrong");
-  });
-
-  it("clears error with null", () => {
-    useBestiaryStore.getState().setError("An error");
-    useBestiaryStore.getState().setError(null);
-    expect(useBestiaryStore.getState().error).toBeNull();
-  });
-});
-
-describe("setWarnings", () => {
-  it("sets warnings array", () => {
-    useBestiaryStore.getState().setWarnings(["warn1", "warn2"]);
-    expect(useBestiaryStore.getState().warnings).toEqual(["warn1", "warn2"]);
-  });
-
-  it("replaces existing warnings", () => {
-    useBestiaryStore.getState().setWarnings(["old"]);
-    useBestiaryStore.getState().setWarnings(["new"]);
-    expect(useBestiaryStore.getState().warnings).toEqual(["new"]);
-  });
-});
-
 // ── loadMonsters ──────────────────────────────────────────────────────────────
 
 describe("loadMonsters", () => {
@@ -167,12 +108,14 @@ describe("allSources", () => {
   });
 
   it("returns unique sorted sources", () => {
-    useBestiaryStore.getState().setMonsters([
-      makeMonster({ source: "XPHB" }),
-      makeMonster({ source: "MM" }),
-      makeMonster({ source: "XPHB" }),
-      makeMonster({ source: "VGM" }),
-    ]);
+    useBestiaryStore.setState({
+      monsters: [
+        makeMonster({ source: "XPHB" }),
+        makeMonster({ source: "MM" }),
+        makeMonster({ source: "XPHB" }),
+        makeMonster({ source: "VGM" }),
+      ],
+    });
     expect(useBestiaryStore.getState().allSources()).toEqual(["MM", "VGM", "XPHB"]);
   });
 });
@@ -185,12 +128,14 @@ describe("allTypes", () => {
   });
 
   it("returns unique capitalized sorted base types", () => {
-    useBestiaryStore.getState().setMonsters([
-      makeMonster({ type: "humanoid" }),
-      makeMonster({ type: "beast" }),
-      makeMonster({ type: "humanoid" }),
-      makeMonster({ type: "undead" }),
-    ]);
+    useBestiaryStore.setState({
+      monsters: [
+        makeMonster({ type: "humanoid" }),
+        makeMonster({ type: "beast" }),
+        makeMonster({ type: "humanoid" }),
+        makeMonster({ type: "undead" }),
+      ],
+    });
     expect(useBestiaryStore.getState().allTypes()).toEqual([
       "Beast",
       "Humanoid",
@@ -207,11 +152,13 @@ describe("allEnvironments", () => {
   });
 
   it("returns unique sorted environments across all monsters", () => {
-    useBestiaryStore.getState().setMonsters([
-      makeMonster({ environment: ["forest", "grassland"] }),
-      makeMonster({ environment: ["forest", "desert"] }),
-      makeMonster({ environment: [] }),
-    ]);
+    useBestiaryStore.setState({
+      monsters: [
+        makeMonster({ environment: ["forest", "grassland"] }),
+        makeMonster({ environment: ["forest", "desert"] }),
+        makeMonster({ environment: [] }),
+      ],
+    });
     expect(useBestiaryStore.getState().allEnvironments()).toEqual([
       "desert",
       "forest",

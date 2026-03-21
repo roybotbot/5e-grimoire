@@ -7,17 +7,7 @@ interface BestiaryStore {
   loading: boolean;
   error: string | null;
   warnings: string[];
-
-  // Setters
-  setMonsters: (monsters: MonsterData[]) => void;
-  setLoading: (loading: boolean) => void;
-  setError: (error: string | null) => void;
-  setWarnings: (warnings: string[]) => void;
-
-  // Actions
   loadMonsters: () => Promise<void>;
-
-  // Derived
   allSources: () => string[];
   allTypes: () => string[];
   allEnvironments: () => string[];
@@ -28,11 +18,6 @@ export const useBestiaryStore = create<BestiaryStore>((set, get) => ({
   loading: false,
   error: null,
   warnings: [],
-
-  setMonsters: (monsters) => set({ monsters }),
-  setLoading: (loading) => set({ loading }),
-  setError: (error) => set({ error }),
-  setWarnings: (warnings) => set({ warnings }),
 
   loadMonsters: async () => {
     set({ loading: true, error: null });

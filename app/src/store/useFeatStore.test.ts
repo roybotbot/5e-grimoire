@@ -50,75 +50,6 @@ describe("initial state", () => {
   });
 });
 
-// ── Setters ───────────────────────────────────────────────────────────────────
-
-describe("setFeats", () => {
-  it("updates feats array", () => {
-    const feat = makeFeat({});
-    useFeatStore.getState().setFeats([feat]);
-    expect(useFeatStore.getState().feats).toHaveLength(1);
-    expect(useFeatStore.getState().feats[0].name).toBe("Test Feat");
-  });
-
-  it("replaces existing feats", () => {
-    useFeatStore.getState().setFeats([makeFeat({ name: "Feat 1" })]);
-    useFeatStore.getState().setFeats([makeFeat({ name: "Feat 2" })]);
-    expect(useFeatStore.getState().feats).toHaveLength(1);
-    expect(useFeatStore.getState().feats[0].name).toBe("Feat 2");
-  });
-
-  it("can set empty array", () => {
-    useFeatStore.getState().setFeats([makeFeat()]);
-    useFeatStore.getState().setFeats([]);
-    expect(useFeatStore.getState().feats).toHaveLength(0);
-  });
-});
-
-describe("setLoading", () => {
-  it("sets loading to true", () => {
-    useFeatStore.getState().setLoading(true);
-    expect(useFeatStore.getState().loading).toBe(true);
-  });
-
-  it("sets loading to false", () => {
-    useFeatStore.getState().setLoading(true);
-    useFeatStore.getState().setLoading(false);
-    expect(useFeatStore.getState().loading).toBe(false);
-  });
-});
-
-describe("setError", () => {
-  it("sets an error message", () => {
-    useFeatStore.getState().setError("Something went wrong");
-    expect(useFeatStore.getState().error).toBe("Something went wrong");
-  });
-
-  it("clears error with null", () => {
-    useFeatStore.getState().setError("An error");
-    useFeatStore.getState().setError(null);
-    expect(useFeatStore.getState().error).toBeNull();
-  });
-});
-
-describe("setWarnings", () => {
-  it("sets warnings array", () => {
-    useFeatStore.getState().setWarnings(["warn1", "warn2"]);
-    expect(useFeatStore.getState().warnings).toEqual(["warn1", "warn2"]);
-  });
-
-  it("replaces existing warnings", () => {
-    useFeatStore.getState().setWarnings(["old"]);
-    useFeatStore.getState().setWarnings(["new"]);
-    expect(useFeatStore.getState().warnings).toEqual(["new"]);
-  });
-
-  it("can clear warnings with empty array", () => {
-    useFeatStore.getState().setWarnings(["warn"]);
-    useFeatStore.getState().setWarnings([]);
-    expect(useFeatStore.getState().warnings).toHaveLength(0);
-  });
-});
-
 // ── loadFeats ─────────────────────────────────────────────────────────────────
 
 describe("loadFeats", () => {
@@ -152,7 +83,7 @@ describe("loadFeats", () => {
   });
 
   it("clears error before loading", async () => {
-    useFeatStore.getState().setError("old error");
+    useFeatStore.setState({ error: "old error" });
     vi.mocked(loadAllFeats).mockResolvedValue({ feats: [], warnings: [] });
     await useFeatStore.getState().loadFeats();
     expect(useFeatStore.getState().error).toBeNull();
@@ -167,20 +98,24 @@ describe("allSources", () => {
   });
 
   it("returns unique sorted source abbreviations", () => {
-    useFeatStore.getState().setFeats([
-      makeFeat({ source: "XPHB" }),
-      makeFeat({ source: "PHB" }),
-      makeFeat({ source: "TCE" }),
-    ]);
+    useFeatStore.setState({
+      feats: [
+        makeFeat({ source: "XPHB" }),
+        makeFeat({ source: "PHB" }),
+        makeFeat({ source: "TCE" }),
+      ],
+    });
     expect(useFeatStore.getState().allSources()).toEqual(["PHB", "TCE", "XPHB"]);
   });
 
   it("deduplicates sources", () => {
-    useFeatStore.getState().setFeats([
-      makeFeat({ source: "PHB" }),
-      makeFeat({ source: "PHB" }),
-      makeFeat({ source: "XGE" }),
-    ]);
+    useFeatStore.setState({
+      feats: [
+        makeFeat({ source: "PHB" }),
+        makeFeat({ source: "PHB" }),
+        makeFeat({ source: "XGE" }),
+      ],
+    });
     expect(useFeatStore.getState().allSources()).toEqual(["PHB", "XGE"]);
   });
 });
@@ -193,11 +128,13 @@ describe("allCategories", () => {
   });
 
   it("returns unique sorted categoryDisplay values", () => {
-    useFeatStore.getState().setFeats([
-      makeFeat({ categoryDisplay: "Origin" }),
-      makeFeat({ categoryDisplay: "General" }),
-      makeFeat({ categoryDisplay: "Epic Boon" }),
-    ]);
+    useFeatStore.setState({
+      feats: [
+        makeFeat({ categoryDisplay: "Origin" }),
+        makeFeat({ categoryDisplay: "General" }),
+        makeFeat({ categoryDisplay: "Epic Boon" }),
+      ],
+    });
     expect(useFeatStore.getState().allCategories()).toEqual([
       "Epic Boon",
       "General",
@@ -206,11 +143,13 @@ describe("allCategories", () => {
   });
 
   it("deduplicates categories", () => {
-    useFeatStore.getState().setFeats([
-      makeFeat({ categoryDisplay: "General" }),
-      makeFeat({ categoryDisplay: "General" }),
-      makeFeat({ categoryDisplay: "Origin" }),
-    ]);
+    useFeatStore.setState({
+      feats: [
+        makeFeat({ categoryDisplay: "General" }),
+        makeFeat({ categoryDisplay: "General" }),
+        makeFeat({ categoryDisplay: "Origin" }),
+      ],
+    });
     expect(useFeatStore.getState().allCategories()).toEqual(["General", "Origin"]);
   });
 });

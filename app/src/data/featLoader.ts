@@ -1,16 +1,10 @@
 import type { FeatData, RawFeat, RawPrerequisite } from "./featTypes";
+import { buildEntityId } from "./entityId";
+import { ABILITY_MAP } from "./constants";
 
 // ── ID ────────────────────────────────────────────────────────────────────────
 
-export function buildFeatId(name: string, source: string): string {
-  const slug = (s: string) =>
-    s
-      .toLowerCase()
-      .replace(/['']/g, "")
-      .replace(/[^a-z0-9]+/g, "-")
-      .replace(/^-|-$/g, "");
-  return `${slug(name)}_${slug(source)}`;
-}
+export const buildFeatId = buildEntityId;
 
 // ── Category ──────────────────────────────────────────────────────────────────
 
@@ -33,17 +27,6 @@ export function normalizeFeatCategory(category: string | undefined): string {
   if (!category) return "Other";
   return CATEGORY_MAP[category] ?? "Other";
 }
-
-// ── Ability name map ──────────────────────────────────────────────────────────
-
-const ABILITY_NAMES: Record<string, string> = {
-  str: "Strength",
-  dex: "Dexterity",
-  con: "Constitution",
-  int: "Intelligence",
-  wis: "Wisdom",
-  cha: "Charisma",
-};
 
 // ── Prerequisites ─────────────────────────────────────────────────────────────
 
@@ -71,7 +54,7 @@ export function normalizePrerequisite(
     if (prereq.ability && prereq.ability.length > 0) {
       for (const abilityObj of prereq.ability) {
         for (const [key, score] of Object.entries(abilityObj)) {
-          const abilityName = ABILITY_NAMES[key] ?? key;
+          const abilityName = ABILITY_MAP[key] ?? key;
           parts.push(`${abilityName} ${score}+`);
         }
       }

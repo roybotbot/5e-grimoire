@@ -1,29 +1,10 @@
 import type { SpeciesData, SpeciesSpeed, RawRace } from "./speciesTypes";
+import { buildEntityId } from "./entityId";
+import { SIZE_MAP } from "./constants";
 
 // ── ID ────────────────────────────────────────────────────────────────────────
 
-export function buildSpeciesId(name: string, source: string): string {
-  // Use a URL-safe slug: lowercase, replace spaces with hyphens,
-  // strip non-alphanumeric chars (except hyphens), collapse multiple hyphens
-  const slug = (s: string) =>
-    s
-      .toLowerCase()
-      .replace(/['']/g, "")
-      .replace(/[^a-z0-9]+/g, "-")
-      .replace(/^-|-$/g, "");
-  return `${slug(name)}_${slug(source)}`;
-}
-
-// ── Size ──────────────────────────────────────────────────────────────────────
-
-const SIZE_MAP: Record<string, string> = {
-  T: "Tiny",
-  S: "Small",
-  M: "Medium",
-  L: "Large",
-  H: "Huge",
-  G: "Gargantuan",
-};
+export const buildSpeciesId = buildEntityId;
 
 export function normalizeSize(sizes: string[] | undefined): string {
   if (!sizes || sizes.length === 0) return "Medium";
