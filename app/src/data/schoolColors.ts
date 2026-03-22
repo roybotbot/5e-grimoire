@@ -1,7 +1,7 @@
 export const SCHOOL_COLORS: Record<string, { primary: string; secondary: string }> = {
   evocation: { primary: "#D94032", secondary: "#C7A834" },
   abjuration: { primary: "#1A3E78", secondary: "#CC6B2C" },
-  necromancy: { primary: "#1A1A1A", secondary: "#7B2D5F" },
+  necromancy: { primary: "#6B6B6B", secondary: "#7B2D5F" },
   divination: { primary: "#E8A820", secondary: "#6B3FA0" },
   illusion: { primary: "#6B3FA0", secondary: "#D4960B" },
   conjuration: { primary: "#1A7A6D", secondary: "#A63428" },
