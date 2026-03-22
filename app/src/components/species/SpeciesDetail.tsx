@@ -56,11 +56,11 @@ export function SpeciesDetail({ species, onClose, onPrev, onNext }: SpeciesDetai
             borderBottom: "1px solid var(--border-subtle)",
           }}
         >
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 min-w-0">
             <button
               type="button"
               onClick={onClose}
-              className="flex items-center justify-center cursor-pointer"
+              className="flex items-center justify-center cursor-pointer flex-shrink-0"
               style={{
                 background: "none",
                 border: "none",
@@ -73,6 +73,7 @@ export function SpeciesDetail({ species, onClose, onPrev, onNext }: SpeciesDetai
               ←
             </button>
             <span
+              className="truncate"
               style={{
                 fontFamily: "'DM Sans', sans-serif",
                 fontWeight: 600,
