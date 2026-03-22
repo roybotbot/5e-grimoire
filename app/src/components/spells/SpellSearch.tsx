@@ -34,6 +34,24 @@ export function SpellSearch({ query, onQueryChange }: SpellSearchProps) {
             color: "var(--text-primary)",
           }}
         />
+        {query && (
+          <button
+            type="button"
+            onClick={() => onQueryChange("")}
+            className="flex items-center justify-center cursor-pointer flex-shrink-0"
+            style={{
+              background: "none",
+              border: "none",
+              color: "var(--text-muted)",
+              fontSize: "14px",
+              padding: "4px",
+              lineHeight: 1,
+            }}
+            aria-label="Clear search"
+          >
+            ✕
+          </button>
+        )}
       </div>
     </div>
   );

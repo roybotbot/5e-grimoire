@@ -40,6 +40,24 @@ function BestiarySearch({
           className="w-full bg-transparent outline-none py-1.5"
           style={{ fontSize: "15px", color: "var(--text-primary)" }}
         />
+        {query && (
+          <button
+            type="button"
+            onClick={() => onQueryChange("")}
+            className="flex items-center justify-center cursor-pointer flex-shrink-0"
+            style={{
+              background: "none",
+              border: "none",
+              color: "var(--text-muted)",
+              fontSize: "14px",
+              padding: "4px",
+              lineHeight: 1,
+            }}
+            aria-label="Clear search"
+          >
+            ✕
+          </button>
+        )}
       </div>
     </div>
   );

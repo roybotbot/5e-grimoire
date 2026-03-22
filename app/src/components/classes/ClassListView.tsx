@@ -151,19 +151,47 @@ export function ClassListView() {
         className="px-4 py-2 flex-shrink-0"
         style={{ borderBottom: "1px solid var(--border-subtle)" }}
       >
-        <input
-          ref={searchInputRef}
-          type="text"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          placeholder="Search classes…"
-          className="w-full px-3 py-1.5 rounded-[2px] text-[13px] outline-none"
+        <div
+          className="flex items-center gap-2 px-2 rounded-[2px] border"
           style={{
             background: "var(--bg-panel)",
-            border: "1px solid var(--border-subtle)",
-            color: "var(--text-primary)",
+            borderColor: "var(--border-subtle)",
           }}
-        />
+        >
+          <span style={{ color: "var(--text-muted)", fontSize: "16px", lineHeight: 1 }}>
+            ⌕
+          </span>
+          <input
+            ref={searchInputRef}
+            type="text"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="Search classes…"
+            className="w-full bg-transparent outline-none py-1.5"
+            style={{
+              fontSize: "15px",
+              color: "var(--text-primary)",
+            }}
+          />
+          {query && (
+            <button
+              type="button"
+              onClick={() => setQuery("")}
+              className="flex items-center justify-center cursor-pointer flex-shrink-0"
+              style={{
+                background: "none",
+                border: "none",
+                color: "var(--text-muted)",
+                fontSize: "14px",
+                padding: "4px",
+                lineHeight: 1,
+              }}
+              aria-label="Clear search"
+            >
+              ✕
+            </button>
+          )}
+        </div>
       </div>
 
       {/* Class list */}
