@@ -57,7 +57,7 @@ export function SpellDetail({ spell, onClose, onPrev, onNext }: SpellDetailProps
       >
         {/* Top bar */}
         <div
-          className="flex items-center justify-between px-4 flex-shrink-0"
+          className="flex items-center justify-between gap-3 px-4 flex-shrink-0"
           style={{
             height: "48px",
             background: "var(--bg-base)",
@@ -110,7 +110,7 @@ export function SpellDetail({ spell, onClose, onPrev, onNext }: SpellDetailProps
             </button>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 flex-shrink-0">
             <span
               style={{
                 width: "8px",
