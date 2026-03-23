@@ -1,67 +1,13 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { useNavigate, useParams } from "react-router";
 import { Link } from "react-router";
+import { SearchBar } from "../ui/SearchBar";
 import { useBestiaryStore } from "../../store/useBestiaryStore";
 import { useBestiaryFilters } from "../../hooks/useBestiaryFilters";
 import { useBestiarySearch } from "../../hooks/useBestiarySearch";
 import { BestiaryFilters } from "./BestiaryFilters";
 import { MonsterList } from "./MonsterList";
 import { MonsterDetail } from "./MonsterDetail";
-
-// Inline search component (same pattern as SpellSearch)
-function BestiarySearch({
-  query,
-  onQueryChange,
-}: {
-  query: string;
-  onQueryChange: (q: string) => void;
-}) {
-  const [focused, setFocused] = useState(false);
-  return (
-    <div className="px-4 py-2 bg-[var(--bg-base)]">
-      <div
-        className="flex items-center gap-2 px-2 rounded-[2px] border"
-        style={{
-          background: "var(--bg-panel)",
-          borderColor: focused ? "var(--accent-danger)" : "var(--border-subtle)",
-          transition: "border-color 120ms",
-        }}
-      >
-        <span style={{ color: "var(--text-muted)", fontSize: "16px", lineHeight: 1 }}>
-          ⌕
-        </span>
-        <input
-          type="text"
-          value={query}
-          onChange={(e) => onQueryChange(e.target.value)}
-          onFocus={() => setFocused(true)}
-          onBlur={() => setFocused(false)}
-          placeholder="Search creatures..."
-          className="w-full bg-transparent outline-none py-1.5"
-          style={{ fontSize: "15px", color: "var(--text-primary)" }}
-        />
-        {query && (
-          <button
-            type="button"
-            onClick={() => onQueryChange("")}
-            className="flex items-center justify-center cursor-pointer flex-shrink-0"
-            style={{
-              background: "none",
-              border: "none",
-              color: "var(--text-muted)",
-              fontSize: "14px",
-              padding: "4px",
-              lineHeight: 1,
-            }}
-            aria-label="Clear search"
-          >
-            ✕
-          </button>
-        )}
-      </div>
-    </div>
-  );
-}
 
 export function BestiaryListView() {
   const navigate = useNavigate();
@@ -226,7 +172,7 @@ export function BestiaryListView() {
       </div>
 
       {/* Search */}
-      <BestiarySearch query={query} onQueryChange={setQuery} />
+      <SearchBar query={query} onQueryChange={setQuery} placeholder="Search creatures..." accentColor="var(--accent-danger)" />
 
       {/* Filters */}
       <BestiaryFilters

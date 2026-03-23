@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { useNavigate, useParams } from "react-router";
 import { Link } from "react-router";
+import { SearchBar } from "../ui/SearchBar";
 import { useClassStore } from "../../store/useClassStore";
 import { useClassSearch } from "../../hooks/useClassSearch";
 import { ClassList } from "./ClassList";
@@ -146,53 +147,8 @@ export function ClassListView() {
         </span>
       </div>
 
-      {/* Search input */}
-      <div
-        className="px-4 py-2 flex-shrink-0"
-        style={{ borderBottom: "1px solid var(--border-subtle)" }}
-      >
-        <div
-          className="flex items-center gap-2 px-2 rounded-[2px] border"
-          style={{
-            background: "var(--bg-panel)",
-            borderColor: "var(--border-subtle)",
-          }}
-        >
-          <span style={{ color: "var(--text-muted)", fontSize: "16px", lineHeight: 1 }}>
-            ⌕
-          </span>
-          <input
-            ref={searchInputRef}
-            type="text"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search classes…"
-            className="w-full bg-transparent outline-none py-1.5"
-            style={{
-              fontSize: "15px",
-              color: "var(--text-primary)",
-            }}
-          />
-          {query && (
-            <button
-              type="button"
-              onClick={() => setQuery("")}
-              className="flex items-center justify-center cursor-pointer flex-shrink-0"
-              style={{
-                background: "none",
-                border: "none",
-                color: "var(--text-muted)",
-                fontSize: "14px",
-                padding: "4px",
-                lineHeight: 1,
-              }}
-              aria-label="Clear search"
-            >
-              ✕
-            </button>
-          )}
-        </div>
-      </div>
+      {/* Search */}
+      <SearchBar ref={searchInputRef} query={query} onQueryChange={setQuery} placeholder="Search classes…" />
 
       {/* Class list */}
       <ClassList

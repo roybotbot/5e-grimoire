@@ -5,7 +5,7 @@ import { useSpellStore } from "../../store/useSpellStore";
 import { useSavedSpellsStore } from "../../store/useSavedSpellsStore";
 import { useSpellFilters } from "../../hooks/useSpellFilters";
 import { useSpellSearch } from "../../hooks/useSpellSearch";
-import { SpellSearch } from "./SpellSearch";
+import { SearchBar } from "../ui/SearchBar";
 import { SpellFilters } from "./SpellFilters";
 import { SpellList } from "./SpellList";
 import { SpellDetail } from "./SpellDetail";
@@ -243,7 +243,7 @@ export function SpellListView() {
       </div>
 
       {/* Search */}
-      <SpellSearch query={query} onQueryChange={setQuery} />
+      <SearchBar query={query} onQueryChange={setQuery} placeholder="Search spells..." />
 
       {/* Filters */}
       <SpellFilters

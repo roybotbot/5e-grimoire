@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { useNavigate, useParams } from "react-router";
 import { Link } from "react-router";
+import { SearchBar } from "../ui/SearchBar";
 import { useSpeciesStore } from "../../store/useSpeciesStore";
 import { useSpeciesFilters } from "../../hooks/useSpeciesFilters";
 import { useSpeciesSearch } from "../../hooks/useSpeciesSearch";
@@ -159,50 +160,7 @@ export function SpeciesListView() {
       </div>
 
       {/* Search */}
-      <div className="px-4 py-2 bg-[var(--bg-base)]">
-        <div
-          className="flex items-center gap-2 px-2 rounded-[2px] border"
-          style={{
-            background: "var(--bg-panel)",
-            borderColor: "var(--border-subtle)",
-            transition: "border-color 120ms",
-          }}
-        >
-          <span style={{ color: "var(--text-muted)", fontSize: "16px", lineHeight: 1 }}>
-            ⌕
-          </span>
-          <input
-            ref={searchInputRef}
-            type="text"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search species..."
-            className="w-full bg-transparent outline-none py-1.5"
-            style={{
-              fontSize: "15px",
-              color: "var(--text-primary)",
-            }}
-          />
-          {query && (
-            <button
-              type="button"
-              onClick={() => setQuery("")}
-              className="flex items-center justify-center cursor-pointer flex-shrink-0"
-              style={{
-                background: "none",
-                border: "none",
-                color: "var(--text-muted)",
-                fontSize: "14px",
-                padding: "4px",
-                lineHeight: 1,
-              }}
-              aria-label="Clear search"
-            >
-              ✕
-            </button>
-          )}
-        </div>
-      </div>
+      <SearchBar ref={searchInputRef} query={query} onQueryChange={setQuery} placeholder="Search species..." />
 
       {/* Filters */}
       <SpeciesFilters
