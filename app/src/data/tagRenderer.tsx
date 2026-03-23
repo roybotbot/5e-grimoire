@@ -18,7 +18,11 @@ export function extractTagDisplay(tag: string, content: string): string {
   }
   if (tag === "variantrule") {
     const parts = content.split("|");
-    return parts[parts.length - 1];
+    // 3+ segments: last is display override (e.g., "Hit Points|XPHB|Hit Point" → "Hit Point")
+    // 2 segments: name|source, display is the name (e.g., "Hit Points|XPHB" → "Hit Points")
+    // 1 segment: just the name
+    if (parts.length >= 3) return parts[parts.length - 1];
+    return parts[0];
   }
   const pipeIdx = content.indexOf("|");
   if (pipeIdx === -1) return content;

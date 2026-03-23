@@ -20,8 +20,8 @@ describe("extractTagDisplay", () => {
     );
   });
 
-  it("{@variantrule} with only name|src returns src", () => {
-    expect(extractTagDisplay("variantrule", "Flanking|PHB")).toBe("PHB");
+  it("{@variantrule} with only name|src returns name", () => {
+    expect(extractTagDisplay("variantrule", "Flanking|PHB")).toBe("Flanking");
   });
 
   it("generic tag with pipe → text before first pipe", () => {
