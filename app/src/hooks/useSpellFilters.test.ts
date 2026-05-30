@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { applyFilters } from "./useSpellFilters";
+import { applyFilters, clearFilterGroup } from "./useSpellFilters";
 import type { SpellData } from "../data/spellTypes";
 
 function makeSpell(overrides: Partial<SpellData> & { name: string }): SpellData {
@@ -8,7 +8,7 @@ function makeSpell(overrides: Partial<SpellData> & { name: string }): SpellData 
     source: "PHB",
     level: 1,
     school: "Evocation",
-    schoolIndex: "V",
+    schoolIndex: "evocation",
     castingTime: "1 action",
     castingTimeCategory: "action",
     range: "60 feet",
@@ -26,10 +26,10 @@ function makeSpell(overrides: Partial<SpellData> & { name: string }): SpellData 
 const SPELLS: SpellData[] = [
   makeSpell({ name: "Fireball", level: 3, school: "Evocation", classes: ["Wizard", "Sorcerer"], damageTypes: ["fire"], castingTimeCategory: "action" }),
   makeSpell({ name: "Healing Word", level: 1, school: "Evocation", classes: ["Cleric", "Druid"], castingTimeCategory: "bonus", concentration: false, ritual: false }),
-  makeSpell({ name: "Detect Magic", level: 1, school: "Divination", classes: ["Wizard", "Cleric"], castingTimeCategory: "action", ritual: true }),
-  makeSpell({ name: "Bless", level: 1, school: "Enchantment", classes: ["Cleric"], castingTimeCategory: "action", concentration: true }),
-  makeSpell({ name: "Counterspell", level: 3, school: "Abjuration", classes: ["Wizard", "Sorcerer"], castingTimeCategory: "reaction" }),
-  makeSpell({ name: "Haste", level: 3, school: "Transmutation", classes: ["Wizard"], castingTimeCategory: "action", concentration: true, source: "XGE" }),
+  makeSpell({ name: "Detect Magic", level: 1, school: "Divination", schoolIndex: "divination", classes: ["Wizard", "Cleric"], castingTimeCategory: "action", ritual: true }),
+  makeSpell({ name: "Bless", level: 1, school: "Enchantment", schoolIndex: "enchantment", classes: ["Cleric"], castingTimeCategory: "action", concentration: true }),
+  makeSpell({ name: "Counterspell", level: 3, school: "Abjuration", schoolIndex: "abjuration", classes: ["Wizard", "Sorcerer"], castingTimeCategory: "reaction" }),
+  makeSpell({ name: "Haste", level: 3, school: "Transmutation", schoolIndex: "transmutation", classes: ["Wizard"], castingTimeCategory: "action", concentration: true, source: "XGE" }),
 ];
 
 describe("applyFilters", () => {
@@ -54,8 +54,8 @@ describe("applyFilters", () => {
     expect(applyFilters(SPELLS, { levels: new Set([9]) })).toHaveLength(0);
   });
 
-  it("filters by school", () => {
-    const result = applyFilters(SPELLS, { schools: new Set(["Evocation"]) });
+  it("filters by school index from the UI", () => {
+    const result = applyFilters(SPELLS, { schools: new Set(["evocation"]) });
     expect(result.map((s) => s.name)).toEqual(
       expect.arrayContaining(["Fireball", "Healing Word"])
     );
@@ -150,5 +150,40 @@ describe("applyFilters", () => {
       expect.arrayContaining(["Fireball", "Haste"])
     );
     expect(result).toHaveLength(2);
+  });
+});
+
+describe("clearFilterGroup", () => {
+  it("clears only the requested filter group", () => {
+    const filters = {
+      levels: new Set([1, 3]),
+      schools: new Set(["evocation"]),
+      classes: new Set(["Wizard"]),
+      castingTimes: new Set(["action" as const]),
+      concentration: true,
+      ritual: true,
+      components: new Set(["V"]),
+      damageTypes: new Set(["fire"]),
+      sources: new Set(["PHB"]),
+    };
+
+    const next = clearFilterGroup(filters, "schools");
+
+    expect(next.schools).toBeUndefined();
+    expect(next.levels).toEqual(new Set([1, 3]));
+    expect(next.classes).toEqual(new Set(["Wizard"]));
+    expect(next.castingTimes).toEqual(new Set(["action"]));
+    expect(next.concentration).toBe(true);
+    expect(next.ritual).toBe(true);
+    expect(next.components).toEqual(new Set(["V"]));
+    expect(next.damageTypes).toEqual(new Set(["fire"]));
+    expect(next.sources).toEqual(new Set(["PHB"]));
+  });
+
+  it("clears boolean filters by unsetting them", () => {
+    const next = clearFilterGroup({ concentration: true, ritual: true }, "concentration");
+
+    expect(next.concentration).toBeUndefined();
+    expect(next.ritual).toBe(true);
   });
 });

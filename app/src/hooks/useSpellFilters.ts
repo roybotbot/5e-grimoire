@@ -13,6 +13,12 @@ export interface FilterState {
   sources?: Set<string>;
 }
 
+export type FilterGroup = keyof FilterState;
+
+export function clearFilterGroup(filters: FilterState, group: FilterGroup): FilterState {
+  return { ...filters, [group]: undefined };
+}
+
 export function applyFilters(spells: SpellData[], filters: FilterState): SpellData[] {
   return spells.filter((spell) => {
     // Level: OR within set
@@ -20,9 +26,10 @@ export function applyFilters(spells: SpellData[], filters: FilterState): SpellDa
       if (!filters.levels.has(spell.level)) return false;
     }
 
-    // School: OR within set
+    // School: OR within set. UI stores normalized school indexes (e.g. "evocation"),
+    // while older callers/tests may still pass full names (e.g. "Evocation").
     if (filters.schools && filters.schools.size > 0) {
-      if (!filters.schools.has(spell.school)) return false;
+      if (!filters.schools.has(spell.schoolIndex) && !filters.schools.has(spell.school)) return false;
     }
 
     // Classes: spell must belong to at least one of the selected classes
@@ -130,6 +137,10 @@ export function useSpellFilters(spells: SpellData[]) {
     setFilters((f) => ({ ...f, sources: new Set(sources) }));
   }
 
+  function clearFilter(group: FilterGroup) {
+    setFilters((f) => clearFilterGroup(f, group));
+  }
+
   function clearAll() {
     setFilters({});
   }
@@ -147,6 +158,7 @@ export function useSpellFilters(spells: SpellData[]) {
     setComponents,
     setDamageTypes,
     setSources,
+    clearFilter,
     clearAll,
   };
 }

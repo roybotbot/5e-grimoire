@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Toggle } from "../ui/Toggle";
 import { MultiDropdown } from "../ui/MultiDropdown";
 import { SCHOOL_DISPLAY_ABBR } from "../../data/schools";
-import type { FilterState } from "../../hooks/useSpellFilters";
+import type { FilterGroup, FilterState } from "../../hooks/useSpellFilters";
 import type { CastingTimeCategory } from "../../data/spellTypes";
 
 const LEVELS = [
@@ -57,7 +57,32 @@ interface SpellFiltersProps {
   allClasses: string[];
   allSources: string[];
   hasActiveFilters: boolean;
+  onClearFilter: (group: FilterGroup) => void;
   onClearAll: () => void;
+}
+
+function FilterClearButton({
+  label,
+  active,
+  onClick,
+}: {
+  label: string;
+  active: boolean;
+  onClick: () => void;
+}) {
+  if (!active) return null;
+
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className="px-1.5 py-0.5 text-[10px] font-medium border rounded-[2px] border-[var(--border-subtle)] text-[var(--accent-danger)] bg-transparent hover:bg-[var(--bg-panel)] cursor-pointer"
+      aria-label={`Clear ${label} filter`}
+      title={`Clear ${label} filter`}
+    >
+      Clear
+    </button>
+  );
 }
 
 export function SpellFilters({
@@ -74,6 +99,7 @@ export function SpellFilters({
   allClasses,
   allSources,
   hasActiveFilters,
+  onClearFilter,
   onClearAll,
 }: SpellFiltersProps) {
   const [expanded, setExpanded] = useState(false);
@@ -105,6 +131,11 @@ export function SpellFilters({
               title={title}
             />
           ))}
+          <FilterClearButton
+            label="level"
+            active={(filters.levels?.size ?? 0) > 0}
+            onClick={() => onClearFilter("levels")}
+          />
         </div>
       </div>
 
@@ -124,6 +155,11 @@ export function SpellFilters({
                 title={index.charAt(0).toUpperCase() + index.slice(1)}
               />
             ))}
+            <FilterClearButton
+              label="school"
+              active={(filters.schools?.size ?? 0) > 0}
+              onClick={() => onClearFilter("schools")}
+            />
           </div>
         </div>
 
@@ -143,6 +179,11 @@ export function SpellFilters({
                 onClick={() => toggleCastingTime(value)}
               />
             ))}
+            <FilterClearButton
+              label="time"
+              active={(filters.castingTimes?.size ?? 0) > 0}
+              onClick={() => onClearFilter("castingTimes")}
+            />
           </div>
         </div>
       </div>
@@ -154,6 +195,11 @@ export function SpellFilters({
           options={allClasses}
           selected={selectedClasses}
           onChange={setClasses}
+        />
+        <FilterClearButton
+          label="class"
+          active={selectedClasses.length > 0}
+          onClick={() => onClearFilter("classes")}
         />
         <Toggle
           label="Conc."
@@ -206,6 +252,11 @@ export function SpellFilters({
                 }
               />
             ))}
+            <FilterClearButton
+              label="component"
+              active={selectedComponents.length > 0}
+              onClick={() => onClearFilter("components")}
+            />
           </div>
 
           <MultiDropdown
@@ -214,12 +265,22 @@ export function SpellFilters({
             selected={selectedDamageTypes}
             onChange={setDamageTypes}
           />
+          <FilterClearButton
+            label="damage"
+            active={selectedDamageTypes.length > 0}
+            onClick={() => onClearFilter("damageTypes")}
+          />
 
           <MultiDropdown
             label="Source"
             options={allSources}
             selected={selectedSources}
             onChange={setSources}
+          />
+          <FilterClearButton
+            label="source"
+            active={selectedSources.length > 0}
+            onClick={() => onClearFilter("sources")}
           />
         </div>
       )}

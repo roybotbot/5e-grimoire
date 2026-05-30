@@ -47,6 +47,7 @@ export function SpellListView() {
     setComponents,
     setDamageTypes,
     setSources,
+    clearFilter,
     clearAll,
   } = useSpellFilters(baseSpells);
 
@@ -260,6 +261,7 @@ export function SpellListView() {
         allClasses={allClasses()}
         allSources={allSources()}
         hasActiveFilters={hasActiveFilters}
+        onClearFilter={clearFilter}
         onClearAll={clearAll}
       />
 
